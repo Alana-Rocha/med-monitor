@@ -26,14 +26,12 @@ type FilterControlsProps = {
 export function FilterControls({ onFilterChange, defaultValues }: FilterControlsProps) {
   const [showFilters, setShowFilters] = useState(false)
 
-  // Estados para cada filtro
   const [user, setUser] = useState(defaultValues?.user || "all")
   const [medicationType, setMedicationType] = useState(defaultValues?.medicationType || "all")
   const [adherenceRate, setAdherenceRate] = useState(defaultValues?.adherenceRate || "all")
   const [ageRange, setAgeRange] = useState(defaultValues?.ageRange || [20, 70])
   const [timeOfDay, setTimeOfDay] = useState<string[]>(defaultValues?.timeOfDay || [])
 
-  // Atualizar os filtros quando qualquer valor mudar
   useEffect(() => {
     onFilterChange({
       user,
@@ -44,7 +42,6 @@ export function FilterControls({ onFilterChange, defaultValues }: FilterControls
     })
   }, [user, medicationType, adherenceRate, ageRange, timeOfDay, onFilterChange])
 
-  // Função para alternar a seleção de horários
   const toggleTimeOfDay = (value: string) => {
     setTimeOfDay(timeOfDay.includes(value) ? timeOfDay.filter((item) => item !== value) : [...timeOfDay, value])
   }

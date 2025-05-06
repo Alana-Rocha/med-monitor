@@ -20,7 +20,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { FilterControls, type FilterValues } from "@/components/filter-controls"
 
-// Dados de exemplo completos
 const allImpactData = [
   { mes: "Jan", adesaoAntes: 60, adesaoDepois: 65, faixaEtaria: [20, 60], medicationType: "cardiac", user: "user1" },
   { mes: "Fev", adesaoAntes: 60, adesaoDepois: 68, faixaEtaria: [30, 70], medicationType: "diabetes", user: "user2" },
@@ -121,7 +120,6 @@ const allAgeImpactData = [
   },
 ]
 
-// Função para converter string de faixa etária para array de números
 const getFaixaEtariaRange = (faixa: string): [number, number] => {
   if (faixa === "18-30") return [18, 30]
   if (faixa === "31-45") return [31, 45]
@@ -131,19 +129,15 @@ const getFaixaEtariaRange = (faixa: string): [number, number] => {
   return [0, 100]
 }
 
-// Função para verificar se um item passa pelos filtros
 const passesFilter = (item: any, filters: FilterValues): boolean => {
-  // Filtro de usuário
   if (filters.user !== "all" && item.user !== filters.user) {
     return false
   }
 
-  // Filtro de tipo de medicamento
   if (filters.medicationType !== "all" && item.medicationType !== filters.medicationType) {
     return false
   }
 
-  // Filtro de taxa de adesão
   if (filters.adherenceRate !== "all") {
     if (filters.adherenceRate === "high" && item.adesao < 80) {
       return false
@@ -156,23 +150,18 @@ const passesFilter = (item: any, filters: FilterValues): boolean => {
     }
   }
 
-  // Filtro de faixa etária
   if (item.faixaEtaria) {
-    // Para dados que já têm faixa etária como array
     if (item.faixaEtaria[1] < filters.ageRange[0] || item.faixaEtaria[0] > filters.ageRange[1]) {
       return false
     }
   } else if (item.faixa) {
-    // Para dados que têm faixa etária como string
     const range = getFaixaEtariaRange(item.faixa)
     if (range[1] < filters.ageRange[0] || range[0] > filters.ageRange[1]) {
       return false
     }
   }
 
-  // Filtro de horário do dia
   if (filters.timeOfDay.length > 0 && item.timeOfDay) {
-    // Verifica se pelo menos um dos horários selecionados está presente no item
     const hasMatchingTime = filters.timeOfDay.some((time) => item.timeOfDay.includes(time))
     if (!hasMatchingTime) {
       return false
@@ -192,7 +181,6 @@ export function SocialImpactPage() {
     timeOfDay: [],
   })
 
-  // Dados filtrados usando useMemo para evitar recálculos desnecessários
   const filteredImpactData = useMemo(() => {
     return allImpactData.filter((item) => passesFilter(item, filters))
   }, [filters])
@@ -205,9 +193,7 @@ export function SocialImpactPage() {
     return allAgeImpactData.filter((item) => passesFilter(item, filters))
   }, [filters])
 
-  // Calcular métricas com base nos dados filtrados
   const metrics = useMemo(() => {
-    // Se não houver dados, retornar valores padrão
     if (filteredImpactData.length === 0) {
       return {
         aumentoAdesao: 0,
@@ -217,21 +203,17 @@ export function SocialImpactPage() {
       }
     }
 
-    // Calcular aumento médio na adesão
     const aumentoAdesao =
       filteredImpactData.reduce((acc, item) => acc + (item.adesaoDepois - item.adesaoAntes), 0) /
       filteredImpactData.length
 
-    // Calcular redução média de esquecimentos (usando regionData como exemplo)
     const reducaoEsquecimentos =
       filteredRegionData.length > 0
         ? filteredRegionData.reduce((acc, item) => acc + item.reducaoEsquecimentos, 0) / filteredRegionData.length
         : 0
 
-    // Número de pacientes beneficiados (simulado com base nos dados filtrados)
     const pacientesBeneficiados = Math.round(245 * (filteredImpactData.length / allImpactData.length))
 
-    // Satisfação dos usuários (valor fixo para este exemplo)
     const satisfacaoUsuarios = 92
 
     return {

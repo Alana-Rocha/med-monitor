@@ -5,7 +5,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { AlertTriangle, TrendingDown, TrendingUp } from "lucide-react"
 
-// Dados de exemplo
 const insightsData = [
   {
     id: 1,
@@ -49,7 +48,6 @@ const insightsData = [
   },
 ]
 
-// Dados de recomendações
 const recommendationsData = [
   {
     id: 1,

@@ -13,7 +13,6 @@ import html2canvas from "html2canvas"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-// Dados de exemplo mais detalhados
 const allReportData = [
   {
     id: 1,
@@ -145,11 +144,8 @@ const allReportData = [
   },
 ]
 
-// Função para verificar se um item passa pelos filtros
 const passesFilter = (item: any, filters: FilterValues): boolean => {
-  // Filtro de usuário (simulando que o paciente está associado a um usuário)
   if (filters.user !== "all") {
-    // Simulação: pacientes pares são do user1, ímpares do user2, e id > 6 são do user3
     const userMapping = {
       user1: item.id % 2 === 0,
       user2: item.id % 2 !== 0,
@@ -160,7 +156,6 @@ const passesFilter = (item: any, filters: FilterValues): boolean => {
     }
   }
 
-  // Filtro de tipo de medicamento
   if (filters.medicationType !== "all") {
     const medicationTypeMapping = {
       cardiac: item.tiposMedicamentos.includes("Cardíacos"),
@@ -176,7 +171,6 @@ const passesFilter = (item: any, filters: FilterValues): boolean => {
     }
   }
 
-  // Filtro de taxa de adesão
   if (filters.adherenceRate !== "all") {
     if (filters.adherenceRate === "high" && item.adesao < 80) {
       return false
@@ -189,12 +183,10 @@ const passesFilter = (item: any, filters: FilterValues): boolean => {
     }
   }
 
-  // Filtro de faixa etária
   if (item.idade < filters.ageRange[0] || item.idade > filters.ageRange[1]) {
     return false
   }
 
-  // Filtro de horário do dia
   if (filters.timeOfDay.length > 0) {
     const timeMapping = {
       morning: item.horarioEsquecimento.includes("Manhã"),
@@ -202,7 +194,6 @@ const passesFilter = (item: any, filters: FilterValues): boolean => {
       night: item.horarioEsquecimento.includes("Noite"),
     }
 
-    // Verifica se pelo menos um dos horários selecionados está presente no item
     const hasMatchingTime = filters.timeOfDay.some((time) => timeMapping[time as keyof typeof timeMapping])
 
     if (!hasMatchingTime && item.horarioEsquecimento.length > 0) {
@@ -225,12 +216,10 @@ export function ReportsPage() {
     timeOfDay: [],
   })
 
-  // Filtrar dados com base nos filtros selecionados
   const filteredReportData = useMemo(() => {
     return allReportData.filter((item) => passesFilter(item, filters))
   }, [filters])
 
-  // Calcular estatísticas para o resumo
   const statistics = useMemo(() => {
     if (filteredReportData.length === 0) {
       return {
@@ -259,13 +248,11 @@ export function ReportsPage() {
 
     const pacientesAltoRisco = filteredReportData.filter((item) => item.adesao < 70 && item.medicamentos > 3).length
 
-    // Distribuição por gênero
     const distribuicaoGenero = filteredReportData.reduce((acc: Record<string, number>, item) => {
       acc[item.genero] = (acc[item.genero] || 0) + 1
       return acc
     }, {})
 
-    // Distribuição por região
     const distribuicaoRegiao = filteredReportData.reduce((acc: Record<string, number>, item) => {
       acc[item.regiao] = (acc[item.regiao] || 0) + 1
       return acc
@@ -283,13 +270,10 @@ export function ReportsPage() {
     }
   }, [filteredReportData])
 
-  // Função para exportar para CSV com dados mais detalhados
   const exportToCSV = () => {
-    // Cabeçalhos do CSV
     let csvContent =
       "ID,Paciente,Idade,Gênero,Região,Medicamentos,Tipos de Medicamentos,Taxa de Adesão (%),Taxa Anterior (%),Melhoria (%),Alertas Ignorados,Tempo de Uso (meses),Horários de Esquecimento,Observações,Última Atualização\n"
 
-    // Adicionar dados
     filteredReportData.forEach((row) => {
       csvContent += `${row.id},`
       csvContent += `"${row.paciente}",`
@@ -308,7 +292,6 @@ export function ReportsPage() {
       csvContent += `${row.ultimaAtualizacao}\n`
     })
 
-    // Criar blob e link para download
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
@@ -320,34 +303,29 @@ export function ReportsPage() {
     document.body.removeChild(link)
   }
 
-  // Função aprimorada para exportar para PDF
   const exportToPDF = async (type = "table") => {
     const contentRef = type === "table" ? tableRef : summaryRef
 
     if (!contentRef.current) return
 
     try {
-      // Criar instância do jsPDF
       const doc = new jsPDF("p", "mm", "a4")
       const pageWidth = doc.internal.pageSize.getWidth()
       const pageHeight = doc.internal.pageSize.getHeight()
 
-      // Adicionar cabeçalho
-      doc.setFillColor(52, 152, 219) // Cor azul para o cabeçalho
+      doc.setFillColor(52, 152, 219) 
       doc.rect(0, 0, pageWidth, 20, "F")
-      doc.setTextColor(255, 255, 255) // Texto branco
+      doc.setTextColor(255, 255, 255) 
       doc.setFontSize(16)
       doc.setFont("helvetica", "bold")
       doc.text("MediMonitor - Sistema de Monitoramento de Adesão", pageWidth / 2, 10, { align: "center" })
 
-      // Adicionar título
-      doc.setTextColor(0, 0, 0) // Texto preto
+      doc.setTextColor(0, 0, 0) 
       doc.setFontSize(14)
       const title =
         type === "table" ? "Relatório Detalhado de Adesão a Medicamentos" : "Resumo de Adesão a Medicamentos"
       doc.text(title, pageWidth / 2, 30, { align: "center" })
 
-      // Adicionar informações do relatório
       doc.setFontSize(10)
       doc.setFont("helvetica", "normal")
       doc.text(`Data de geração: ${new Date().toLocaleDateString("pt-BR")}`, 15, 40)
@@ -374,12 +352,10 @@ export function ReportsPage() {
         filterText += `Faixa Etária: ${filters.ageRange[0]}-${filters.ageRange[1]}, `
         if (filters.timeOfDay.length > 0) filterText += `Horários: ${filters.timeOfDay.join(", ")}`
 
-        // Quebrar texto longo em múltiplas linhas
         const splitText = doc.splitTextToSize(filterText, pageWidth - 30)
         doc.text(splitText, 15, 60)
       }
 
-      // Capturar o conteúdo como imagem
       const canvas = await html2canvas(contentRef.current, {
         scale: 2,
         useCORS: true,
@@ -389,11 +365,9 @@ export function ReportsPage() {
       })
       const imgData = canvas.toDataURL("image/png")
 
-      // Adicionar a imagem ao PDF
       const imgWidth = pageWidth - 30
       const imgHeight = (canvas.height * imgWidth) / canvas.width
 
-      // Posicionar a imagem após o texto de filtros
       let yPosition = 70
       if (
         filters.user !== "all" ||
@@ -408,14 +382,12 @@ export function ReportsPage() {
 
       doc.addImage(imgData, "PNG", 15, yPosition, imgWidth, imgHeight)
 
-      // Adicionar rodapé
       const footerPosition = pageHeight - 10
       doc.setFontSize(8)
-      doc.setTextColor(100, 100, 100) // Cinza
+      doc.setTextColor(100, 100, 100) 
       doc.text("MediMonitor © 2023 - Todos os direitos reservados", pageWidth / 2, footerPosition, { align: "center" })
       doc.text(`Página 1 de 1`, pageWidth - 20, footerPosition)
 
-      // Salvar o PDF
       const fileName =
         type === "table"
           ? `relatorio_adesao_${new Date().toISOString().split("T")[0]}.pdf`
@@ -427,26 +399,22 @@ export function ReportsPage() {
     }
   }
 
-  // Função para imprimir
   const printReport = () => {
     window.print()
   }
 
-  // Função para obter a cor de fundo com base na taxa de adesão
   const getAdesaoColor = (adesao: number) => {
     if (adesao >= 80) return "bg-green-100 dark:bg-green-900"
     if (adesao >= 50) return "bg-yellow-100 dark:bg-yellow-900"
     return "bg-red-100 dark:bg-red-900"
   }
 
-  // Função para obter a cor do texto com base na taxa de adesão
   const getAdesaoTextColor = (adesao: number) => {
     if (adesao >= 80) return "text-green-800 dark:text-green-200"
     if (adesao >= 50) return "text-yellow-800 dark:text-yellow-200"
     return "text-red-800 dark:text-red-200"
   }
 
-  // Função para obter o badge de tendência
   const getTendenciaBadge = (atual: number, anterior: number) => {
     const diff = atual - anterior
     if (diff > 5) return <Badge className="bg-green-500">↑ Melhorando</Badge>
@@ -462,16 +430,6 @@ export function ReportsPage() {
           <p className="text-muted-foreground">Exporte e analise dados de adesão a medicamentos</p>
         </div>
         <div className="flex items-center gap-2">
-          <Select value={reportType} onValueChange={setReportType}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Tipo de relatório" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="adherence">Taxa de Adesão</SelectItem>
-              <SelectItem value="alerts">Alertas Ignorados</SelectItem>
-              <SelectItem value="complete">Relatório Completo</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
       </div>
 

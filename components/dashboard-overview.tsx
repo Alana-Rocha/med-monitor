@@ -20,7 +20,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-// Dados de exemplo
 const weeklyData = [
   { name: "Seg", adesao: 85, esquecimentos: 3 },
   { name: "Ter", adesao: 78, esquecimentos: 5 },
