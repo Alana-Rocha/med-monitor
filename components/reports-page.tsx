@@ -322,7 +322,7 @@ export function ReportsPage() {
       doc.setTextColor(255, 255, 255) 
       doc.setFontSize(16)
       doc.setFont("helvetica", "bold")
-      doc.text("MediMonitor - Sistema de Monitoramento de Adesão", pageWidth / 2, 10, { align: "center" })
+      doc.text("MedMonitor - Sistema de Monitoramento de Adesão", pageWidth / 2, 10, { align: "center" })
 
       doc.setTextColor(0, 0, 0) 
       doc.setFontSize(14)
@@ -389,7 +389,7 @@ export function ReportsPage() {
       const footerPosition = pageHeight - 10
       doc.setFontSize(8)
       doc.setTextColor(100, 100, 100) 
-      doc.text("MediMonitor © 2023 - Todos os direitos reservados", pageWidth / 2, footerPosition, { align: "center" })
+      doc.text("MedMonitor © 2025 - Todos os direitos reservados", pageWidth / 2, footerPosition, { align: "center" })
       doc.text(`Página 1 de 1`, pageWidth - 20, footerPosition)
 
       const fileName =
