@@ -47,7 +47,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex w-64 flex-col border-r bg-muted/40">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="text-lg">MediMonitor</span>
+            <span className="text-lg">MedMonitor</span>
           </Link>
         </div>
         <nav className="grid gap-1 p-4 text-sm font-medium">
@@ -86,7 +86,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <SheetContent side="left" className="w-64 p-0">
           <div className="flex h-14 items-center border-b px-4">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <span className="text-lg">MediMonitor</span>
+              <span className="text-lg">MedMonitor</span>
             </Link>
             <Button variant="ghost" size="icon" className="ml-auto" onClick={() => setOpen(false)}>
               <X className="h-5 w-5" />

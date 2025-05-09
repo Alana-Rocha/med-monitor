@@ -25,7 +25,6 @@ type FilterControlsProps = {
 
 export function FilterControls({ onFilterChange, defaultValues }: FilterControlsProps) {
   const [showFilters, setShowFilters] = useState(false)
-
   const [user, setUser] = useState(defaultValues?.user || "all")
   const [medicationType, setMedicationType] = useState(defaultValues?.medicationType || "all")
   const [adherenceRate, setAdherenceRate] = useState(defaultValues?.adherenceRate || "all")
