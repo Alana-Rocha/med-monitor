@@ -271,6 +271,8 @@ export function ReportsPage() {
   }, [filteredReportData])
 
   const exportToCSV = () => {
+    return alert('Não foi possível processar sua solicitação! Tente novamente mais tarde!');
+
     let csvContent =
       "ID,Paciente,Idade,Gênero,Região,Medicamentos,Tipos de Medicamentos,Taxa de Adesão (%),Taxa Anterior (%),Melhoria (%),Alertas Ignorados,Tempo de Uso (meses),Horários de Esquecimento,Observações,Última Atualização\n"
 
@@ -304,6 +306,8 @@ export function ReportsPage() {
   }
 
   const exportToPDF = async (type = "table") => {
+    return alert('Não foi possível processar sua solicitação! Tente novamente mais tarde!');
+    
     const contentRef = type === "table" ? tableRef : summaryRef
 
     if (!contentRef.current) return
