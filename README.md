@@ -3,6 +3,14 @@
 ## 📋 Descrição
 Med Monitor é uma aplicação web e mobile desenvolvida com Next.js e TypeScript, focada no monitoramento e gerenciamento de medicamentos. O projeto utiliza tecnologias modernas para fornecer uma experiência de usuário fluida e responsiva.
 
+## 🎥 Demonstração em Vídeo
+Assista ao vídeo de demonstração do Med Monitor no YouTube:
+- [Video - Med Monitor](https://youtu.be/wU-f-gflEig?si=o-VeSpgexxhPVX36)
+
+## 📄 Documentação
+Leia a documentação do projeto abaixo.
+- [Análise de Dados - Med Monitor(PDF)](pi_analise_dados_med_monitor.pdf)
+
 ## 🚀 Tecnologias Utilizadas
 
 - [Next.js](https://nextjs.org/) - Framework React para desenvolvimento web
