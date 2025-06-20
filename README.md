@@ -1,7 +1,7 @@
 # Sistema de Monitoramento de Adesão a Medicamentos (Med Monitor)
 
 ## 📋 Descrição
-Med Monitor é uma aplicação web e mobile desenvolvida com Next.js e TypeScript, focada no monitoramento e gerenciamento de medicamentos. O projeto utiliza tecnologias modernas para fornecer uma experiência de usuário fluida e responsiva.
+Med Monitor é uma aplicação web desenvolvida com Next.js e TypeScript, focada no monitoramento e gerenciamento de medicamentos. O projeto utiliza tecnologias modernas para fornecer uma experiência de usuário fluida e responsiva.
 
 ## 🎥 Demonstração em Vídeo
 Assista ao vídeo de demonstração do Med Monitor no YouTube:
